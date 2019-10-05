@@ -11,8 +11,15 @@ defmodule EctoIPRange.MixProject do
       elixir: "~> 1.7",
       deps: deps(),
       description: "Ecto IP Range",
+      dialyzer: dialyzer(),
       docs: docs(),
-      package: package()
+      package: package(),
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.travis": :test
+      ],
+      test_coverage: [tool: ExCoveralls]
     ]
   end
 
@@ -20,7 +27,21 @@ defmodule EctoIPRange.MixProject do
 
   defp deps do
     [
-      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
+      {:credo, "~> 1.0", only: :dev, runtime: false},
+      {:dialyxir, "~> 1.0.0-rc", only: :dev, runtime: false},
+      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
+      {:excoveralls, "~> 0.11", only: :test, runtime: false}
+    ]
+  end
+
+  defp dialyzer do
+    [
+      flags: [
+        :error_handling,
+        :race_conditions,
+        :underspecs,
+        :unmatched_returns
+      ]
     ]
   end
 
