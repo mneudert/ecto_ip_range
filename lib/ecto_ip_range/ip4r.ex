@@ -36,6 +36,26 @@ defmodule EctoIPRange.IP4R do
     end
   end
 
+  def cast(address) when is_binary(address) do
+    parsed_address =
+      address
+      |> String.to_charlist()
+      |> :inet.parse_ipv4_address()
+
+    case parsed_address do
+      {:ok, ip_address} ->
+        {:ok,
+         %__MODULE__{
+           range: address <> "/32",
+           first_ip: ip_address,
+           last_ip: ip_address
+         }}
+
+      _ ->
+        :error
+    end
+  end
+
   def cast(%__MODULE__{} = address), do: {:ok, address}
   def cast(_), do: :error
 
