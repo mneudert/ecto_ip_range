@@ -4,7 +4,7 @@ defmodule EctoIPRange.IP4R do
 
   ## Fields
 
-    * `cidr`
+    * `range`
     * `first_ip`
     * `last_ip`
   """
@@ -12,12 +12,12 @@ defmodule EctoIPRange.IP4R do
   use Ecto.Type
 
   @type t :: %__MODULE__{
-          cidr: binary,
+          range: binary,
           first_ip: :inet.ip4_address(),
           last_ip: :inet.ip4_address()
         }
 
-  defstruct [:cidr, :first_ip, :last_ip]
+  defstruct [:range, :first_ip, :last_ip]
 
   def type, do: :ip4r
 
