@@ -9,6 +9,8 @@ defmodule EctoIPRange.MixProject do
       name: "Ecto IP Range",
       version: "0.1.0-dev",
       elixir: "~> 1.7",
+      elixirc_paths: elixirc_paths(Mix.env()),
+      aliases: aliases(),
       deps: deps(),
       description: "Ecto IP Range",
       dialyzer: dialyzer(),
@@ -24,6 +26,12 @@ defmodule EctoIPRange.MixProject do
   end
 
   def application, do: []
+
+  defp aliases do
+    [
+      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
+    ]
+  end
 
   defp deps do
     [
@@ -54,6 +62,9 @@ defmodule EctoIPRange.MixProject do
       source_url: @url_github
     ]
   end
+
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
 
   defp package do
     %{
