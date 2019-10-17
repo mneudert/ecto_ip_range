@@ -14,6 +14,15 @@ defmodule EctoIPRange.IP4RTest do
     assert IP4R.cast("a.b.c.d") == :error
   end
 
+  test "cast range" do
+    range = "1.1.1.1-2.2.2.2"
+    casted = %IP4R{range: range, first_ip: {1, 1, 1, 1}, last_ip: {2, 2, 2, 2}}
+
+    assert {:ok, ^casted} = IP4R.cast(range)
+
+    assert IP4R.cast("1.1.1.1-a.b.c.d") == :error
+  end
+
   test "cast struct" do
     assert {:ok, %IP4R{}} = IP4R.cast(%IP4R{})
     assert IP4R.cast("invalid") == :error

@@ -37,12 +37,21 @@ defmodule EctoIPRange.IP4R do
   end
 
   def cast(address) when is_binary(address) do
-    parsed_address =
-      address
-      |> String.to_charlist()
-      |> :inet.parse_ipv4_address()
+    case String.contains?(address, "-") do
+      true -> cast_range(address)
+      false -> cast_binary(address)
+    end
+  end
 
-    case parsed_address do
+  def cast(%__MODULE__{} = address), do: {:ok, address}
+  def cast(_), do: :error
+
+  def load(_), do: :error
+
+  def dump(_), do: :error
+
+  defp cast_binary(address) do
+    case parse_ipv4_binary(address) do
       {:ok, ip_address} ->
         {:ok,
          %__MODULE__{
@@ -56,10 +65,24 @@ defmodule EctoIPRange.IP4R do
     end
   end
 
-  def cast(%__MODULE__{} = address), do: {:ok, address}
-  def cast(_), do: :error
+  defp cast_range(range) do
+    with [first_ip, last_ip] <- String.split(range, "-", parts: 2),
+         {:ok, first_ip_address} <- parse_ipv4_binary(first_ip),
+         {:ok, last_ip_address} <- parse_ipv4_binary(last_ip) do
+      {:ok,
+       %__MODULE__{
+         range: range,
+         first_ip: first_ip_address,
+         last_ip: last_ip_address
+       }}
+    else
+      _ -> :error
+    end
+  end
 
-  def load(_), do: :error
-
-  def dump(_), do: :error
+  defp parse_ipv4_binary(address) do
+    address
+    |> String.to_charlist()
+    |> :inet.parse_ipv4_address()
+  end
 end
