@@ -33,6 +33,7 @@ defmodule EctoIPRange.IP4RTest do
   end
 
   test "load" do
+    assert {:ok, %IP4R{}} = IP4R.load(%IP4R{})
     assert IP4R.load("invalid") == :error
   end
 end

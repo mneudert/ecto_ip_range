@@ -48,6 +48,7 @@ defmodule EctoIPRange.IP4R do
   def cast(%__MODULE__{} = address), do: {:ok, address}
   def cast(_), do: :error
 
+  def load(%__MODULE__{} = address), do: {:ok, address}
   def load(_), do: :error
 
   def dump(_), do: :error
