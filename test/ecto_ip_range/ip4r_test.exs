@@ -29,6 +29,7 @@ defmodule EctoIPRange.IP4RTest do
   end
 
   test "dump" do
+    assert {:ok, %IP4R{}} = IP4R.dump(%IP4R{})
     assert IP4R.dump("invalid") == :error
   end
 
