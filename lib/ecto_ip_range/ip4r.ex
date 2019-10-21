@@ -21,8 +21,10 @@ defmodule EctoIPRange.IP4R do
 
   defstruct [:range, :first_ip, :last_ip]
 
+  @impl Ecto.Type
   def type, do: :ip4r
 
+  @impl Ecto.Type
   def cast({_, _, _, _} = ip_address) do
     case Inet.ntoa(ip_address) do
       address when is_binary(address) ->
@@ -48,9 +50,11 @@ defmodule EctoIPRange.IP4R do
   def cast(%__MODULE__{} = address), do: {:ok, address}
   def cast(_), do: :error
 
+  @impl Ecto.Type
   def load(%__MODULE__{} = address), do: {:ok, address}
   def load(_), do: :error
 
+  @impl Ecto.Type
   def dump(%__MODULE__{} = address), do: {:ok, address}
   def dump(_), do: :error
 
