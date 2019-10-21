@@ -15,7 +15,7 @@ defmodule EctoIPRange.Util.Inet do
   @doc """
   Parse a binary IPv4 address.
   """
-  @spec parse_ipv4_binary(binary) :: {:ok, :inet.ipv4_address()} | {:error, :einval}
+  @spec parse_ipv4_binary(binary) :: {:ok, :inet.ip_address()} | {:error, :einval}
   def parse_ipv4_binary(address) do
     address
     |> String.to_charlist()
