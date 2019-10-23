@@ -3,6 +3,16 @@ defmodule EctoIPRange.IP4RTest do
 
   alias EctoIPRange.IP4R
 
+  test "cast cidr /32" do
+    address = "127.0.0.1/32"
+    casted = %IP4R{range: address, first_ip: {127, 0, 0, 1}, last_ip: {127, 0, 0, 1}}
+
+    assert {:ok, ^casted} = IP4R.cast(address)
+
+    assert IP4R.cast("1.2.3.4/64") == :error
+    assert IP4R.cast("a.b.c.d/32") == :error
+  end
+
   test "cast ip_address" do
     ip_address = {127, 0, 0, 1}
     casted = %IP4R{range: "127.0.0.1/32", first_ip: ip_address, last_ip: ip_address}

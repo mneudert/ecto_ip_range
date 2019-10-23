@@ -41,9 +41,10 @@ defmodule EctoIPRange.IP4R do
   end
 
   def cast(address) when is_binary(address) do
-    case String.contains?(address, "-") do
-      true -> cast_range(address)
-      false -> cast_binary(address)
+    cond do
+      String.contains?(address, "-") -> cast_range(address)
+      String.contains?(address, "/") -> cast_cidr(address)
+      true -> cast_binary(address)
     end
   end
 
@@ -70,6 +71,13 @@ defmodule EctoIPRange.IP4R do
 
       _ ->
         :error
+    end
+  end
+
+  defp cast_cidr(cidr) do
+    case String.split(cidr, "/", parts: 2) do
+      [address, "32"] -> cast_binary(address)
+      _ -> :error
     end
   end
 
