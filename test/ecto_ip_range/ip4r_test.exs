@@ -17,11 +17,11 @@ defmodule EctoIPRange.IP4RTest do
     assert IP4R.cast("1.2.3.4/x") == :error
   end
 
-  test "cast ip_address" do
-    ip_address = {127, 0, 0, 1}
-    casted = %IP4R{range: "127.0.0.1/32", first_ip: ip_address, last_ip: ip_address}
+  test "cast ip4_address" do
+    ip4_address = {127, 0, 0, 1}
+    casted = %IP4R{range: "127.0.0.1/32", first_ip: ip4_address, last_ip: ip4_address}
 
-    assert {:ok, ^casted} = IP4R.cast(ip_address)
+    assert {:ok, ^casted} = IP4R.cast(ip4_address)
     assert {:ok, ^casted} = IP4R.cast("127.0.0.1")
 
     assert IP4R.cast({"a", "b", "c", "d"}) == :error

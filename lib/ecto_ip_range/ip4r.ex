@@ -25,14 +25,14 @@ defmodule EctoIPRange.IP4R do
   def type, do: :ip4r
 
   @impl Ecto.Type
-  def cast({_, _, _, _} = ip_address) do
-    case Inet.ntoa(ip_address) do
+  def cast({_, _, _, _} = ip4_address) do
+    case Inet.ntoa(ip4_address) do
       address when is_binary(address) ->
         {:ok,
          %__MODULE__{
            range: address <> "/32",
-           first_ip: ip_address,
-           last_ip: ip_address
+           first_ip: ip4_address,
+           last_ip: ip4_address
          }}
 
       _ ->
@@ -61,12 +61,12 @@ defmodule EctoIPRange.IP4R do
 
   defp cast_binary(address) do
     case Inet.parse_ipv4_binary(address) do
-      {:ok, ip_address} ->
+      {:ok, ip4_address} ->
         {:ok,
          %__MODULE__{
            range: address <> "/32",
-           first_ip: ip_address,
-           last_ip: ip_address
+           first_ip: ip4_address,
+           last_ip: ip4_address
          }}
 
       _ ->
@@ -88,13 +88,13 @@ defmodule EctoIPRange.IP4R do
 
   defp cast_range(range) do
     with [first_ip, last_ip] <- String.split(range, "-", parts: 2),
-         {:ok, first_ip_address} <- Inet.parse_ipv4_binary(first_ip),
-         {:ok, last_ip_address} <- Inet.parse_ipv4_binary(last_ip) do
+         {:ok, first_ip4_address} <- Inet.parse_ipv4_binary(first_ip),
+         {:ok, last_ip4_address} <- Inet.parse_ipv4_binary(last_ip) do
       {:ok,
        %__MODULE__{
          range: range,
-         first_ip: first_ip_address,
-         last_ip: last_ip_address
+         first_ip: first_ip4_address,
+         last_ip: last_ip4_address
        }}
     else
       _ -> :error
