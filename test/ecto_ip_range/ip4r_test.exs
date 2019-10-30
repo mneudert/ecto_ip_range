@@ -9,8 +9,12 @@ defmodule EctoIPRange.IP4RTest do
 
     assert {:ok, ^casted} = IP4R.cast(address)
 
-    assert IP4R.cast("1.2.3.4/64") == :error
     assert IP4R.cast("a.b.c.d/32") == :error
+  end
+
+  test "error on invalid cidr maskbits" do
+    assert IP4R.cast("1.2.3.4/64") == :error
+    assert IP4R.cast("1.2.3.4/x") == :error
   end
 
   test "cast ip_address" do

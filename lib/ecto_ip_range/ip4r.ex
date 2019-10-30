@@ -75,11 +75,16 @@ defmodule EctoIPRange.IP4R do
   end
 
   defp cast_cidr(cidr) do
-    case String.split(cidr, "/", parts: 2) do
-      [address, "32"] -> cast_binary(address)
+    with [address, maskstring] <- String.split(cidr, "/", parts: 2),
+         {maskbits, ""} when maskbits in 0..32 <- Integer.parse(maskstring) do
+      cast_cidr(address, maskbits)
+    else
       _ -> :error
     end
   end
+
+  defp cast_cidr(address, 32), do: cast_binary(address)
+  defp cast_cidr(_, _), do: :error
 
   defp cast_range(range) do
     with [first_ip, last_ip] <- String.split(range, "-", parts: 2),
