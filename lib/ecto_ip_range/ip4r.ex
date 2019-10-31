@@ -11,6 +11,7 @@ defmodule EctoIPRange.IP4R do
 
   use Ecto.Type
 
+  alias EctoIPRange.Util.CIDR
   alias EctoIPRange.Util.Inet
 
   @type t :: %__MODULE__{
@@ -76,15 +77,18 @@ defmodule EctoIPRange.IP4R do
 
   defp cast_cidr(cidr) do
     with [address, maskstring] <- String.split(cidr, "/", parts: 2),
-         {maskbits, ""} when maskbits in 0..32 <- Integer.parse(maskstring) do
-      cast_cidr(address, maskbits)
+         {maskbits, ""} when maskbits in 0..32 <- Integer.parse(maskstring),
+         {first_ip4_address, last_ip4_address} <- CIDR.parse_ipv4(address, maskbits) do
+      {:ok,
+       %__MODULE__{
+         range: cidr,
+         first_ip: first_ip4_address,
+         last_ip: last_ip4_address
+       }}
     else
       _ -> :error
     end
   end
-
-  defp cast_cidr(address, 32), do: cast_binary(address)
-  defp cast_cidr(_, _), do: :error
 
   defp cast_range(range) do
     with [first_ip, last_ip] <- String.split(range, "-", parts: 2),
