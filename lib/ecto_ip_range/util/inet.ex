@@ -27,6 +27,30 @@ defmodule EctoIPRange.Util.Inet do
   end
 
   @doc """
+  Parse a binary IPv4 or IPv6 address.
+
+  ## Examples
+
+      iex> parse_binary("1.2.3.4")
+      {:ok, {1, 2, 3, 4}}
+
+      iex> parse_binary("1:2:3:4:5:6:7:8")
+      {:ok, {1, 2, 3, 4, 5, 6, 7, 8}}
+
+      iex> parse_binary("a.b.c.d")
+      {:error, :einval}
+
+      iex> parse_binary("s:t:u:v:w:x:y:z")
+      {:error, :einval}
+  """
+  @spec parse_binary(binary) :: {:ok, :inet.ip_address()} | {:error, :einval}
+  def parse_binary(address) do
+    address
+    |> String.to_charlist()
+    |> :inet.parse_address()
+  end
+
+  @doc """
   Parse a binary IPv4 address.
 
   ## Examples
