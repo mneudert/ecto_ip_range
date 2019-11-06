@@ -5,13 +5,14 @@ defmodule EctoIPRange.Postgrex do
 
   alias EctoIPRange.Postgrex.IP4Extension
   alias EctoIPRange.Postgrex.IP4RExtension
+  alias EctoIPRange.Postgrex.IP6Extension
   alias EctoIPRange.Postgrex.IP6RExtension
 
   @doc """
   Returns all available :postgrex extension modules.
   """
-  @spec extensions() :: [IP4Extension | IP4RExtension | IP6RExtension, ...]
+  @spec extensions() :: [IP4Extension | IP4RExtension | IP6Extension | IP6RExtension, ...]
   def extensions do
-    [IP4Extension, IP4RExtension, IP6RExtension]
+    [IP4Extension, IP4RExtension, IP6Extension, IP6RExtension]
   end
 end
