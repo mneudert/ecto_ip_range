@@ -2,6 +2,44 @@ defmodule EctoIPRange.Util.Inet do
   @moduledoc false
 
   @doc """
+  Convert an IPv4 tuple into an IPv6 tuple.
+
+  Wrapper around `:inet.ipv4_mapped_ipv6_address/1` to allow only IPv4-to-IPv6
+  conversion and provide support for OTP < 21.
+
+  ## Examples
+
+      iex> ipv4_to_ipv6({127, 0, 0, 1})
+      {0, 0, 0, 0, 0, 65_535, 32_512, 1}
+
+      iex> ipv4_to_ipv6({512, 0, 0, 1})
+      {:error, :einval}
+
+      iex> ipv4_to_ipv6({"a", "b", "c", "d"})
+      {:error, :einval}
+
+      iex ipv4_to_ipv6({0, 0, 0, 0, 0, 65_535, 32_512, 1})
+      {:error, :einval}
+  """
+  @spec ipv4_to_ipv6(:inet.ip4_address()) :: :inet.ip6_address() | {:error, :einval}
+
+  if function_exported?(:inet, :ipv4_mapped_ipv6_address, 1) do
+    def ipv4_to_ipv6({a, b, c, d} = ip4_address)
+        when a in 0..255 and b in 0..255 and c in 0..255 and d in 0..255 do
+      :inet.ipv4_mapped_ipv6_address(ip4_address)
+    end
+  else
+    def ipv4_to_ipv6({a, b, c, d} = ip4_address)
+        when a in 0..255 and b in 0..255 and c in 0..255 and d in 0..255 do
+      ip4_address
+      |> :inet.ntoa()
+      |> :inet.parse_ipv6_address()
+    end
+  end
+
+  def ipv4_to_ipv6(_), do: {:error, :einval}
+
+  @doc """
   Convert an IP tuple to a binary address.
 
   ## Examples

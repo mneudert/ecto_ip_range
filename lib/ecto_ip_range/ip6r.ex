@@ -26,10 +26,9 @@ defmodule EctoIPRange.IP6R do
   def type, do: :ip6r
 
   @impl Ecto.Type
-  def cast({a, b, c, d} = ip4_address)
-      when is_integer(a) and is_integer(b) and is_integer(c) and is_integer(d) do
+  def cast({_, _, _, _} = ip4_address) do
     ip4_address
-    |> :inet.ipv4_mapped_ipv6_address()
+    |> Inet.ipv4_to_ipv6()
     |> cast()
   end
 
