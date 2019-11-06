@@ -10,7 +10,7 @@ defmodule EctoIPRange.Util.Inet do
   ## Examples
 
       iex> ipv4_to_ipv6({127, 0, 0, 1})
-      {0, 0, 0, 0, 0, 65_535, 32_512, 1}
+      {:ok, {0, 0, 0, 0, 0, 65_535, 32_512, 1}}
 
       iex> ipv4_to_ipv6({512, 0, 0, 1})
       {:error, :einval}
@@ -21,12 +21,12 @@ defmodule EctoIPRange.Util.Inet do
       iex ipv4_to_ipv6({0, 0, 0, 0, 0, 65_535, 32_512, 1})
       {:error, :einval}
   """
-  @spec ipv4_to_ipv6(:inet.ip4_address()) :: :inet.ip6_address() | {:error, :einval}
+  @spec ipv4_to_ipv6(:inet.ip4_address()) :: {:ok, :inet.ip6_address()} | {:error, :einval}
 
   if function_exported?(:inet, :ipv4_mapped_ipv6_address, 1) do
     def ipv4_to_ipv6({a, b, c, d} = ip4_address)
         when a in 0..255 and b in 0..255 and c in 0..255 and d in 0..255 do
-      :inet.ipv4_mapped_ipv6_address(ip4_address)
+      {:ok, :inet.ipv4_mapped_ipv6_address(ip4_address)}
     end
   else
     def ipv4_to_ipv6({a, b, c, d} = ip4_address)

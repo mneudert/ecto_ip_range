@@ -22,9 +22,10 @@ defmodule EctoIPRange.IP6 do
 
   @impl Ecto.Type
   def cast({_, _, _, _} = ip4_address) do
-    ip4_address
-    |> Inet.ipv4_to_ipv6()
-    |> cast()
+    case Inet.ipv4_to_ipv6(ip4_address) do
+      {:ok, ip6_address} -> cast(ip6_address)
+      _ -> :error
+    end
   end
 
   def cast({_, _, _, _, _, _, _, _} = ip6_address) do
