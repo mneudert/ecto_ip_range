@@ -8,7 +8,6 @@ defmodule EctoIPRange.Postgrex.IP6Extension do
   import Postgrex.BinaryUtils, warn: false
 
   alias EctoIPRange.IP6
-  alias EctoIPRange.Util.Inet
 
   def encode(_) do
     quote location: :keep do
