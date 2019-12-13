@@ -11,7 +11,7 @@ if Mix.env() == :test do
     database: "ecto_ip_range",
     hostname: "localhost",
     pool: Ecto.Adapters.SQL.Sandbox,
-    types: EctoIPRange.PostgresTypes
+    types: EctoIPRange.PostgrexTypes
 
   config :logger, level: :warn
 end

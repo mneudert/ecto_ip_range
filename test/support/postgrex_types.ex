@@ -1,4 +1,4 @@
 Postgrex.Types.define(
-  EctoIPRange.PostgresTypes,
+  EctoIPRange.PostgrexTypes,
   EctoIPRange.Postgrex.extensions() ++ Ecto.Adapters.Postgres.extensions()
 )
