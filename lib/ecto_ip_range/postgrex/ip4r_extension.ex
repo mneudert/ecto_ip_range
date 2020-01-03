@@ -8,7 +8,7 @@ defmodule EctoIPRange.Postgrex.IP4RExtension do
   import Postgrex.BinaryUtils, warn: false
 
   alias EctoIPRange.IP4R
-  alias EctoIPRange.Util.Inet
+  alias EctoIPRange.Util.Range
 
   def encode(_) do
     quote location: :keep do
@@ -32,24 +32,11 @@ defmodule EctoIPRange.Postgrex.IP4RExtension do
 
   @doc false
   @spec decode(:inet.ip4_address(), :inet.ip4_address()) :: IP4R.t()
-  def decode(first_ip4_address, first_ip4_address) do
-    with first_ip when is_binary(first_ip) <- Inet.ntoa(first_ip4_address) do
-      %IP4R{
-        range: first_ip <> "/32",
-        first_ip: first_ip4_address,
-        last_ip: first_ip4_address
-      }
-    end
-  end
-
   def decode(first_ip4_address, last_ip4_address) do
-    with first_ip when is_binary(first_ip) <- Inet.ntoa(first_ip4_address),
-         last_ip when is_binary(last_ip) <- Inet.ntoa(last_ip4_address) do
-      %IP4R{
-        range: first_ip <> "-" <> last_ip,
-        first_ip: first_ip4_address,
-        last_ip: last_ip4_address
-      }
-    end
+    %IP4R{
+      range: Range.parse_ipv4(first_ip4_address, last_ip4_address),
+      first_ip: first_ip4_address,
+      last_ip: last_ip4_address
+    }
   end
 end
