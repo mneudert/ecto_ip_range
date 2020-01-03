@@ -8,7 +8,7 @@ defmodule EctoIPRange.Postgrex.IP6RExtension do
   import Postgrex.BinaryUtils, warn: false
 
   alias EctoIPRange.IP6R
-  alias EctoIPRange.Util.Inet
+  alias EctoIPRange.Util.Range
 
   def encode(_) do
     quote location: :keep do
@@ -38,24 +38,11 @@ defmodule EctoIPRange.Postgrex.IP6RExtension do
 
   @doc false
   @spec decode(:inet.ip6_address(), :inet.ip6_address()) :: IP6R.t()
-  def decode(first_ip6_address, first_ip6_address) do
-    with first_ip when is_binary(first_ip) <- Inet.ntoa(first_ip6_address) do
-      %IP6R{
-        range: first_ip <> "/128",
-        first_ip: first_ip6_address,
-        last_ip: first_ip6_address
-      }
-    end
-  end
-
   def decode(first_ip6_address, last_ip6_address) do
-    with first_ip when is_binary(first_ip) <- Inet.ntoa(first_ip6_address),
-         last_ip when is_binary(last_ip) <- Inet.ntoa(last_ip6_address) do
-      %IP6R{
-        range: first_ip <> "-" <> last_ip,
-        first_ip: first_ip6_address,
-        last_ip: last_ip6_address
-      }
-    end
+    %IP6R{
+      range: Range.parse_ipv6(first_ip6_address, last_ip6_address),
+      first_ip: first_ip6_address,
+      last_ip: last_ip6_address
+    }
   end
 end

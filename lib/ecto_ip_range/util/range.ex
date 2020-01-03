@@ -22,4 +22,24 @@ defmodule EctoIPRange.Util.Range do
       _ -> :error
     end
   end
+
+  @doc """
+  Create a CIDR (if possible) or range notation for two IPv6 tuples.
+  """
+  @spec parse_ipv6(:inet.ip6_address(), :inet.ip6_address()) :: binary | :error
+  def parse_ipv6(ip6_address, ip6_address) do
+    case Inet.ntoa(ip6_address) do
+      ip when is_binary(ip) -> ip <> "/128"
+      _ -> :error
+    end
+  end
+
+  def parse_ipv6(first_ip6_address, last_ip6_address) do
+    with first_ip when is_binary(first_ip) <- Inet.ntoa(first_ip6_address),
+         last_ip when is_binary(last_ip) <- Inet.ntoa(last_ip6_address) do
+      first_ip <> "-" <> last_ip
+    else
+      _ -> :error
+    end
+  end
 end
