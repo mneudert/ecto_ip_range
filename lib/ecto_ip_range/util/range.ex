@@ -1,6 +1,8 @@
 defmodule EctoIPRange.Util.Range do
   @moduledoc false
 
+  use Bitwise, skip_operators: true
+
   alias EctoIPRange.Util.Inet
 
   @doc """
@@ -10,6 +12,9 @@ defmodule EctoIPRange.Util.Range do
 
       iex> parse_ipv4({1, 2, 3, 4}, {1, 2, 3, 4})
       "1.2.3.4/32"
+
+      iex> parse_ipv4({127, 0, 0, 0}, {127, 0, 0, 255})
+      "127.0.0.0/24"
 
       iex> parse_ipv4({1, 2, 3, 4}, {2, 3, 4, 5})
       "1.2.3.4-2.3.4.5"
@@ -25,7 +30,10 @@ defmodule EctoIPRange.Util.Range do
   def parse_ipv4(first_ip4_address, last_ip4_address) do
     with first_ip when is_binary(first_ip) <- Inet.ntoa(first_ip4_address),
          last_ip when is_binary(last_ip) <- Inet.ntoa(last_ip4_address) do
-      first_ip <> "-" <> last_ip
+      case netmask_ipv4(first_ip4_address, last_ip4_address) do
+        nil -> first_ip <> "-" <> last_ip
+        maskbits -> first_ip <> "/" <> Integer.to_string(maskbits)
+      end
     else
       _ -> :error
     end
@@ -56,6 +64,34 @@ defmodule EctoIPRange.Util.Range do
       first_ip <> "-" <> last_ip
     else
       _ -> :error
+    end
+  end
+
+  defp netmask_ipv4({first_a, first_b, first_c, first_d}, {last_a, last_b, last_c, last_d}) do
+    netmask_ipv4([first_d, first_c, first_b, first_a], [last_d, last_c, last_b, last_a], 0)
+  end
+
+  defp netmask_ipv4([], [], rangebits), do: 32 - rangebits
+  defp netmask_ipv4([first | _], [first | _], rangebits), do: 32 - rangebits
+
+  defp netmask_ipv4([first | first_parts], [last | last_parts], rangebits) do
+    partbits =
+      Enum.reduce_while(0..7, 0, fn bit, acc ->
+        first_bit = band(first, bsl(1, bit))
+        last_bit = band(last, bsl(1, bit))
+
+        cond do
+          0 == first_bit and 0 != last_bit -> {:cont, acc + 1}
+          bsr(first_bit, bit) == bsr(last_bit, bit) -> {:halt, acc}
+          true -> {:halt, nil}
+        end
+      end)
+
+    cond do
+      partbits == nil -> nil
+      partbits == 8 -> netmask_ipv4(first_parts, last_parts, rangebits + partbits)
+      first_parts == last_parts -> 32 - (rangebits + partbits)
+      true -> nil
     end
   end
 end
