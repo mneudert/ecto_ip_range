@@ -2,7 +2,7 @@
 
 ## Setup
 
-Add the module as a dependency to your `mix.exs` file:
+Add the library as a dependency to your `mix.exs` file:
 
 ```elixir
 defp deps do
