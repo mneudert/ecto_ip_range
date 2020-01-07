@@ -47,6 +47,9 @@ defmodule EctoIPRange.Util.Range do
       iex> parse_ipv6({1, 2, 3, 4, 5, 6, 7, 8}, {1, 2, 3, 4, 5, 6, 7, 8})
       "1:2:3:4:5:6:7:8/128"
 
+      iex> parse_ipv6({1, 2, 3, 4, 0, 0, 0, 0}, {1, 2, 3, 4, 0, 0, 0, 65_535})
+      "1:2:3:4::/112"
+
       iex> parse_ipv6({1, 2, 3, 4, 5, 6, 7, 8}, {2, 3, 4, 5, 6, 7, 8, 9})
       "1:2:3:4:5:6:7:8-2:3:4:5:6:7:8:9"
   """
@@ -61,7 +64,10 @@ defmodule EctoIPRange.Util.Range do
   def parse_ipv6(first_ip6_address, last_ip6_address) do
     with first_ip when is_binary(first_ip) <- Inet.ntoa(first_ip6_address),
          last_ip when is_binary(last_ip) <- Inet.ntoa(last_ip6_address) do
-      first_ip <> "-" <> last_ip
+      case netmask_ipv6(first_ip6_address, last_ip6_address) do
+        nil -> first_ip <> "-" <> last_ip
+        maskbits -> first_ip <> "/" <> Integer.to_string(maskbits)
+      end
     else
       _ -> :error
     end
@@ -91,6 +97,41 @@ defmodule EctoIPRange.Util.Range do
       partbits == nil -> nil
       partbits == 8 -> netmask_ipv4(first_parts, last_parts, rangebits + partbits)
       first_parts == last_parts -> 32 - (rangebits + partbits)
+      true -> nil
+    end
+  end
+
+  defp netmask_ipv6(
+         {first_a, first_b, first_c, first_d, first_e, first_f, first_g, first_h},
+         {last_a, last_b, last_c, last_d, last_e, last_f, last_g, last_h}
+       ) do
+    netmask_ipv6(
+      [first_h, first_g, first_f, first_e, first_d, first_c, first_b, first_a],
+      [last_h, last_g, last_f, last_e, last_d, last_c, last_b, last_a],
+      0
+    )
+  end
+
+  defp netmask_ipv6([], [], rangebits), do: 128 - rangebits
+  defp netmask_ipv6([first | _], [first | _], rangebits), do: 128 - rangebits
+
+  defp netmask_ipv6([first | first_parts], [last | last_parts], rangebits) do
+    partbits =
+      Enum.reduce_while(0..15, 0, fn bit, acc ->
+        first_bit = band(first, bsl(1, bit))
+        last_bit = band(last, bsl(1, bit))
+
+        cond do
+          0 == first_bit and 0 != last_bit -> {:cont, acc + 1}
+          bsr(first_bit, bit) == bsr(last_bit, bit) -> {:halt, acc}
+          true -> {:halt, nil}
+        end
+      end)
+
+    cond do
+      partbits == nil -> nil
+      partbits == 16 -> netmask_ipv6(first_parts, last_parts, rangebits + partbits)
+      first_parts == last_parts -> 128 - (rangebits + partbits)
       true -> nil
     end
   end

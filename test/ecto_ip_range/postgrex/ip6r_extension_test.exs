@@ -20,6 +20,14 @@ defmodule EctoIPRange.Postgrex.IP6RExtensionTest do
     assert [^value] = TestRepo.all(TestSchemaIP6R)
   end
 
+  test "cidr /72 insert/select" do
+    {:ok, network} = IP6R.cast("1:2:3:4::/72")
+    record = %TestSchemaIP6R{network: network}
+
+    assert {:ok, value} = TestRepo.insert(record)
+    assert [^value] = TestRepo.all(TestSchemaIP6R)
+  end
+
   test "custom ip range insert/select" do
     {:ok, network} = IP6R.cast("1:2:3:4:5:6:7:8-2:3:4:5:6:7:8:9")
     record = %TestSchemaIP6R{network: network}
