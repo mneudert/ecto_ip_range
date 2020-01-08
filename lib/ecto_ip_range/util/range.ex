@@ -16,6 +16,9 @@ defmodule EctoIPRange.Util.Range do
       iex> parse_ipv4({127, 0, 0, 0}, {127, 0, 0, 255})
       "127.0.0.0/24"
 
+      iex> parse_ipv4({1, 2, 0, 1}, {1, 2, 0, 0})
+      "1.2.0.1-1.2.0.0"
+
       iex> parse_ipv4({1, 2, 3, 4}, {2, 3, 4, 5})
       "1.2.3.4-2.3.4.5"
   """
