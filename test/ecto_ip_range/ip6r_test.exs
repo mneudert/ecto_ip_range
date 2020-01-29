@@ -40,10 +40,15 @@ defmodule EctoIPRange.IP6RTest do
     ip4_address = {127, 0, 0, 1}
 
     casted_address = %IP6R{
-      range: "::ffff:127.0.0.1/128",
       first_ip: {0, 0, 0, 0, 0, 65_535, 32_512, 1},
       last_ip: {0, 0, 0, 0, 0, 65_535, 32_512, 1}
     }
+
+    casted_address =
+      case System.otp_release() do
+        "19" -> %{casted_address | range: "::FFFF:127.0.0.1/128"}
+        _ -> %{casted_address | range: "::ffff:127.0.0.1/128"}
+      end
 
     casted_binary = %{casted_address | range: "127.0.0.1/128"}
 

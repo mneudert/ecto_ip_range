@@ -50,6 +50,12 @@ defmodule EctoIPRange.Util.Inet do
       iex> ntoa({1, 2, 3, 4, 5, 6, 7, 8})
       "1:2:3:4:5:6:7:8"
 
+      iex> ntoa({"a", "b", "c", "d"})
+      nil
+
+      iex> ntoa({"a", "b", "c", "d", "e", "f", "g", "h"})
+      nil
+
       iex> ntoa("1.2.3.4")
       nil
 
@@ -57,12 +63,26 @@ defmodule EctoIPRange.Util.Inet do
       nil
   """
   @spec ntoa(:inet.ip_address()) :: binary | nil
-  def ntoa(ip_address) do
+  def ntoa({a, b, c, d} = ip_address)
+      when a in 0..255 and b in 0..255 and c in 0..255 and d in 0..255 do
     case :inet.ntoa(ip_address) do
       address when is_list(address) -> Kernel.to_string(address)
       _ -> nil
     end
   end
+
+  # credo:disable-for-next-line Credo.Check.Refactor.CyclomaticComplexity
+  def ntoa({a, b, c, d, e, f, g, h} = ip_address)
+      when a in 0..65_535 and b in 0..65_535 and c in 0..65_535 and d in 0..65_535 and
+             e in 0..65_535 and
+             f in 0..65_535 and g in 0..65_535 and h in 0..65_535 do
+    case :inet.ntoa(ip_address) do
+      address when is_list(address) -> Kernel.to_string(address)
+      _ -> nil
+    end
+  end
+
+  def ntoa(_), do: nil
 
   @doc """
   Parse a binary IPv4 or IPv6 address.
@@ -118,7 +138,7 @@ defmodule EctoIPRange.Util.Inet do
   ## Examples
 
       iex> parse_ipv6_binary("1.2.3.4")
-      {:ok, {0, 0, 0, 0, 0, 65535, 258, 772}}
+      {:ok, {0, 0, 0, 0, 0, 65_535, 258, 772}}
 
       iex> parse_ipv6_binary("1:2:3:4:5:6:7:8")
       {:ok, {1, 2, 3, 4, 5, 6, 7, 8}}
