@@ -12,7 +12,7 @@ defmodule EctoIPRange.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       aliases: aliases(),
       deps: deps(),
-      description: "Ecto IP Range",
+      description: "Ecto/Postgrex IP4R extension",
       dialyzer: dialyzer(),
       docs: docs(),
       package: package(),

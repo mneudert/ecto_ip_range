@@ -1,5 +1,8 @@
 # Ecto IP Range
 
+Ecto/Postgrex types to work with the PostgreSQL
+[`IP4R`](https://github.com/RhodiumToad/ip4r) extension.
+
 ## Setup
 
 Add the library as a dependency to your `mix.exs` file:

@@ -1,5 +1,8 @@
 defmodule EctoIPRange do
   @moduledoc """
+  Ecto/Postgrex types to work with the PostgreSQL
+  [`IP4R`](https://github.com/RhodiumToad/ip4r) extension.
+
   ## Setup
 
   Define a module with the required `:postgrex` extensions added:
