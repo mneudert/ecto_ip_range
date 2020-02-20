@@ -59,6 +59,20 @@ defmodule EctoIPRange.MixProject do
 
   defp docs do
     [
+      groups_for_modules: [
+        "Ecto Types": [
+          EctoIPRange.IP4,
+          EctoIPRange.IP4R,
+          EctoIPRange.IP6,
+          EctoIPRange.IP6R
+        ],
+        "Postgrex Extensions": [
+          EctoIPRange.Postgrex.IP4Extension,
+          EctoIPRange.Postgrex.IP4RExtension,
+          EctoIPRange.Postgrex.IP6Extension,
+          EctoIPRange.Postgrex.IP6RExtension
+        ]
+      ],
       main: "EctoIPRange",
       source_ref: "master",
       source_url: @url_github
