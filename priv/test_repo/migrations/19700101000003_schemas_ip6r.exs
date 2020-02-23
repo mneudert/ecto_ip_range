@@ -3,7 +3,7 @@ defmodule EctoIPRange.TestRepo.Migrations.SchemaIP6R do
 
   def change do
     create table("test_schema_ip6r", primary_key: false) do
-      add :network, :ip6r, primary_key: true
+      add :network, EctoIPRange.IP6R.type(), primary_key: true
     end
   end
 end

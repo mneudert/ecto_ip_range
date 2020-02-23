@@ -3,7 +3,7 @@ defmodule EctoIPRange.TestRepo.Migrations.SchemaIP4 do
 
   def change do
     create table("test_schema_ip4", primary_key: false) do
-      add :address, :ip4, primary_key: true
+      add :address, EctoIPRange.IP4.type(), primary_key: true
     end
   end
 end
