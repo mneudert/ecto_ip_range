@@ -1,6 +1,6 @@
 defmodule EctoIPRange.IP6R do
   @moduledoc """
-  Struct für PostgreSQL `:ip6r`.
+  Struct for PostgreSQL `:ip6r`.
 
   ## Fields
 
