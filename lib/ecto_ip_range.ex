@@ -37,5 +37,21 @@ defmodule EctoIPRange do
   - Address Ranges
     - `EctoIPRange.IP4R`
     - `EctoIPRange.IP6R`
+
+  ### Migrations
+
+  To use the fields in migrations you need to either access the underlying
+  type atom or specify the type atom directly:
+
+      defmodule MyRepo.Migration do
+        use Ecto.Migration
+
+        def change do
+          create table("my_table") do
+            add :direct, :ip4r
+            add :underlying, EctoIPRange.IP4R.type()
+          end
+        end
+      end
   """
 end
