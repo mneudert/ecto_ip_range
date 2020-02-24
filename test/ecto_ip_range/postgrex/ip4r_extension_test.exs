@@ -1,38 +1,45 @@
 defmodule EctoIPRange.Postgrex.IP4RExtensionTest do
   use EctoIPRange.RepoCase
 
-  alias EctoIPRange.IP4R
   alias EctoIPRange.TestSchemaIP4R
 
   test "single ip insert/select" do
-    {:ok, network} = IP4R.cast("1.2.3.4")
-    record = %TestSchemaIP4R{network: network}
+    value =
+      %TestSchemaIP4R{}
+      |> Ecto.Changeset.cast(%{network: "1.2.3.4"}, [:network])
+      |> Ecto.Changeset.validate_required([:network])
+      |> TestRepo.insert!()
 
-    assert {:ok, value} = TestRepo.insert(record)
     assert [^value] = TestRepo.all(TestSchemaIP4R)
   end
 
   test "cidr /32 insert/select" do
-    {:ok, network} = IP4R.cast("1.2.3.4/32")
-    record = %TestSchemaIP4R{network: network}
+    value =
+      %TestSchemaIP4R{}
+      |> Ecto.Changeset.cast(%{network: "1.2.3.4/32"}, [:network])
+      |> Ecto.Changeset.validate_required([:network])
+      |> TestRepo.insert!()
 
-    assert {:ok, value} = TestRepo.insert(record)
     assert [^value] = TestRepo.all(TestSchemaIP4R)
   end
 
   test "cidr /20 insert/select" do
-    {:ok, network} = IP4R.cast("192.168.0.0/20")
-    record = %TestSchemaIP4R{network: network}
+    value =
+      %TestSchemaIP4R{}
+      |> Ecto.Changeset.cast(%{network: "192.168.0.0/20"}, [:network])
+      |> Ecto.Changeset.validate_required([:network])
+      |> TestRepo.insert!()
 
-    assert {:ok, value} = TestRepo.insert(record)
     assert [^value] = TestRepo.all(TestSchemaIP4R)
   end
 
   test "custom ip range insert/select" do
-    {:ok, network} = IP4R.cast("1.2.3.4-2.3.4.5")
-    record = %TestSchemaIP4R{network: network}
+    value =
+      %TestSchemaIP4R{}
+      |> Ecto.Changeset.cast(%{network: "1.2.3.4-2.3.4.5"}, [:network])
+      |> Ecto.Changeset.validate_required([:network])
+      |> TestRepo.insert!()
 
-    assert {:ok, value} = TestRepo.insert(record)
     assert [^value] = TestRepo.all(TestSchemaIP4R)
   end
 end
