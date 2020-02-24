@@ -53,5 +53,15 @@ defmodule EctoIPRange do
           end
         end
       end
+
+  ### Changesets
+
+  To insert a database record with an IP range field you need to ensure the
+  internal type is properly casted. For example using a changeset:
+
+      %MySchema{}
+      |> Ecto.Changeset.cast(%{ip4_address: "1.2.3.4"}, [:ip4_address])
+      |> Ecto.Changeset.validate_required([:ip4_address])
+      |> MyRepo.insert!()
   """
 end
