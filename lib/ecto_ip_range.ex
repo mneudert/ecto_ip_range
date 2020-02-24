@@ -63,5 +63,7 @@ defmodule EctoIPRange do
       |> Ecto.Changeset.cast(%{ip4_address: "1.2.3.4"}, [:ip4_address])
       |> Ecto.Changeset.validate_required([:ip4_address])
       |> MyRepo.insert!()
+
+  Please refer to the individual types to see what values are accepted.
   """
 end

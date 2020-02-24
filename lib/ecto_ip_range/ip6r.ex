@@ -2,6 +2,20 @@ defmodule EctoIPRange.IP6R do
   @moduledoc """
   Struct for PostgreSQL `:ip6r`.
 
+  ## Usage
+
+  When used during a changeset cast the following values are accepted:
+
+  - `:inet.ip6_address()`: an IP6 tuple, e.g. `{8193, 3512, 34211, 0, 0, 35374, 880, 29492}` (single address only)
+  - `binary`
+    - `"2001:0db8:85a3:0000:0000:8a2e:0370:7334"`: single address
+    - `"2001:0db8:85a3:0000:0000:8a2e:0370:0000/112"`: CIDR notation for a range from
+      `2001:0db8:85a3:0000:0000:8a2e:0370:0000` to `2001:0db8:85a3:0000:0000:8a2e:0370:ffff`
+    - `"2001:0db8:85a3:0000:0000:8a2e:0370:7334-2001:0db8:85a3:0000:0000:8a2e:0370:7335"`: arbitrary range
+  - `EctoIPRange.IP4.t()`: a pre-casted struct
+
+  IP4 addresses (binary and tuple) will be converted to IP6 format when casted.
+
   ## Fields
 
     * `range`

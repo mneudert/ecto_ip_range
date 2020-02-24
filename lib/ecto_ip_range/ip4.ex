@@ -2,6 +2,14 @@ defmodule EctoIPRange.IP4 do
   @moduledoc """
   Struct for PostgreSQL `:ip4`.
 
+  ## Usage
+
+  When used during a changeset cast the following values are accepted:
+
+  - `:inet.ip4_address()`: an IP4 tuple, e.g. `{127, 0, 0, 1}`
+  - `binary`: binary representation, e.g. `"127.0.0.1"`
+  - `EctoIPRange.IP4.t()`: a pre-casted struct
+
   ## Fields
 
     * `ip`

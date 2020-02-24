@@ -2,6 +2,16 @@ defmodule EctoIPRange.IP6 do
   @moduledoc """
   Struct for PostgreSQL `:ip6`.
 
+  ## Usage
+
+  When used during a changeset cast the following values are accepted:
+
+  - `:inet.ip6_address()`: an IP6 tuple, e.g. `{8193, 3512, 34211, 0, 0, 35374, 880, 29492}`
+  - `binary`: binary representation, e.g. `"2001:0db8:85a3:0000:0000:8a2e:0370:7334"`
+  - `EctoIPRange.IP6.t()`: a pre-casted struct
+
+  IP4 addresses (binary and tuple) will be converted to IP6 format when casted.
+
   ## Fields
 
     * `ip`

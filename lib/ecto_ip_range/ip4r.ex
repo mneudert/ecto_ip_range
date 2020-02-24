@@ -2,6 +2,17 @@ defmodule EctoIPRange.IP4R do
   @moduledoc """
   Struct for PostgreSQL `:ip4r`.
 
+  ## Usage
+
+  When used during a changeset cast the following values are accepted:
+
+  - `:inet.ip4_address()`: an IP4 tuple, e.g. `{127, 0, 0, 1}` (single address only)
+  - `binary`
+    - `"127.0.0.1"`: single address
+    - `"127.0.0.0/24"`: CIDR notation for a range from `127.0.0.0` to `127.0.0.255`
+    - `"127.0.0.1-127.0.0.2"`: arbitrary range
+  - `EctoIPRange.IP4R.t()`: a pre-casted struct
+
   ## Fields
 
     * `range`
