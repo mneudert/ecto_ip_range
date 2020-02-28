@@ -1,5 +1,5 @@
 defmodule EctoIPRange.Postgrex.IP6ExtensionTest do
-  use EctoIPRange.RepoCase
+  use EctoIPRange.RepoCase, async: true
 
   alias EctoIPRange.TestSchemaIP6
 
