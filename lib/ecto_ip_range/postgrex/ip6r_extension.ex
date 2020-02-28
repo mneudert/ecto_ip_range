@@ -37,20 +37,16 @@ defmodule EctoIPRange.Postgrex.IP6RExtension do
         last_c::size(16)-integer-unsigned, last_d::size(16)-integer-unsigned-unsigned,
         last_e::size(16)-integer-unsigned, last_f::size(16)-integer-unsigned,
         last_g::size(16)-integer-unsigned, last_h::size(16)-integer-unsigned>> ->
-        unquote(__MODULE__).decode(
-          {first_a, first_b, first_c, first_d, first_e, first_f, first_g, first_h},
-          {last_a, last_b, last_c, last_d, last_e, last_f, last_g, last_h}
-        )
-    end
-  end
+        first_ip6_address =
+          {first_a, first_b, first_c, first_d, first_e, first_f, first_g, first_h}
 
-  @doc false
-  @spec decode(:inet.ip6_address(), :inet.ip6_address()) :: IP6R.t()
-  def decode(first_ip6_address, last_ip6_address) do
-    %IP6R{
-      range: Range.parse_ipv6(first_ip6_address, last_ip6_address),
-      first_ip: first_ip6_address,
-      last_ip: last_ip6_address
-    }
+        last_ip6_address = {last_a, last_b, last_c, last_d, last_e, last_f, last_g, last_h}
+
+        %IP6R{
+          range: Range.parse_ipv6(first_ip6_address, last_ip6_address),
+          first_ip: first_ip6_address,
+          last_ip: last_ip6_address
+        }
+    end
   end
 end
