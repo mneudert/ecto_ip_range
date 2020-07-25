@@ -13,8 +13,7 @@ defmodule EctoIPRange.IP6RTest do
     }
 
     assert {:ok, ^casted} = IP6R.cast(address)
-
-    assert IP6R.cast("a.b.c.d/128") == :error
+    assert :error = IP6R.cast("a.b.c.d/128")
   end
 
   test "cast cidr ipv6/128" do
@@ -27,13 +26,12 @@ defmodule EctoIPRange.IP6RTest do
     }
 
     assert {:ok, ^casted} = IP6R.cast(address)
-
-    assert IP6R.cast("s:t:u:v:w:x:y:z/128") == :error
+    assert :error = IP6R.cast("s:t:u:v:w:x:y:z/128")
   end
 
   test "error on invalid cidr maskbits" do
-    assert IP6R.cast("1:2:3:4:5:6:7:8/256") == :error
-    assert IP6R.cast("1:2:3:4:5:6:7:8/XX") == :error
+    assert :error = IP6R.cast("1:2:3:4:5:6:7:8/256")
+    assert :error = IP6R.cast("1:2:3:4:5:6:7:8/XX")
   end
 
   test "cast ip4_address" do
@@ -55,8 +53,8 @@ defmodule EctoIPRange.IP6RTest do
     assert {:ok, ^casted_address} = IP6R.cast(ip4_address)
     assert {:ok, ^casted_binary} = IP6R.cast("127.0.0.1")
 
-    assert IP6R.cast({"a", "b", "c", "d"}) == :error
-    assert IP6R.cast("a.b.c.d") == :error
+    assert :error = IP6R.cast({"a", "b", "c", "d"})
+    assert :error = IP6R.cast("a.b.c.d")
   end
 
   test "cast ip6_address" do
@@ -66,8 +64,8 @@ defmodule EctoIPRange.IP6RTest do
     assert {:ok, ^casted} = IP6R.cast(ip6_address)
     assert {:ok, ^casted} = IP6R.cast("1:2:3:4:5:6:7:8")
 
-    assert IP6R.cast({"s", "t", "u", "v", "w", "x", "y", "z"}) == :error
-    assert IP6R.cast("s:t:u:v:w:x:y:z") == :error
+    assert :error = IP6R.cast({"s", "t", "u", "v", "w", "x", "y", "z"})
+    assert :error = IP6R.cast("s:t:u:v:w:x:y:z")
   end
 
   test "cast ipv4 range" do
@@ -80,8 +78,7 @@ defmodule EctoIPRange.IP6RTest do
     }
 
     assert {:ok, ^casted} = IP6R.cast(range)
-
-    assert IP6R.cast("1.1.1.1-a.b.c.d") == :error
+    assert :error = IP6R.cast("1.1.1.1-a.b.c.d")
   end
 
   test "cast ipv6 range" do
@@ -94,22 +91,21 @@ defmodule EctoIPRange.IP6RTest do
     }
 
     assert {:ok, ^casted} = IP6R.cast(range)
-
-    assert IP6R.cast("1:2:3:4:5:6:7:8-s:t:u:v:w:x:y:z") == :error
+    assert :error = IP6R.cast("1:2:3:4:5:6:7:8-s:t:u:v:w:x:y:z")
   end
 
   test "cast struct" do
     assert {:ok, %IP6R{}} = IP6R.cast(%IP6R{})
-    assert IP6R.cast("invalid") == :error
+    assert :error = IP6R.cast("invalid")
   end
 
   test "dump" do
     assert {:ok, %IP6R{}} = IP6R.dump(%IP6R{})
-    assert IP6R.dump("invalid") == :error
+    assert :error = IP6R.dump("invalid")
   end
 
   test "load" do
     assert {:ok, %IP6R{}} = IP6R.load(%IP6R{})
-    assert IP6R.load("invalid") == :error
+    assert :error = IP6R.load("invalid")
   end
 end

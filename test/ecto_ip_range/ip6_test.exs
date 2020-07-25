@@ -9,8 +9,8 @@ defmodule EctoIPRange.IP6Test do
     assert {:ok, ^casted} = IP6.cast({127, 0, 0, 1})
     assert {:ok, ^casted} = IP6.cast("127.0.0.1")
 
-    assert IP6.cast({"a", "b", "c", "d"}) == :error
-    assert IP6.cast("a.b.c.d") == :error
+    assert :error = IP6.cast({"a", "b", "c", "d"})
+    assert :error = IP6.cast("a.b.c.d")
   end
 
   test "cast ip6_address" do
@@ -20,22 +20,22 @@ defmodule EctoIPRange.IP6Test do
     assert {:ok, ^casted} = IP6.cast(ip6_address)
     assert {:ok, ^casted} = IP6.cast("1:2:3:4:5:6:7:8")
 
-    assert IP6.cast({"s", "t", "u", "v", "w", "x", "y", "z"}) == :error
-    assert IP6.cast("s:t:u:v:w:x:y:z") == :error
+    assert :error = IP6.cast({"s", "t", "u", "v", "w", "x", "y", "z"})
+    assert :error = IP6.cast("s:t:u:v:w:x:y:z")
   end
 
   test "cast struct" do
     assert {:ok, %IP6{}} = IP6.cast(%IP6{})
-    assert IP6.cast("invalid") == :error
+    assert :error = IP6.cast("invalid")
   end
 
   test "dump" do
     assert {:ok, %IP6{}} = IP6.dump(%IP6{})
-    assert IP6.dump("invalid") == :error
+    assert :error = IP6.dump("invalid")
   end
 
   test "load" do
     assert {:ok, %IP6{}} = IP6.load(%IP6{})
-    assert IP6.load("invalid") == :error
+    assert :error = IP6.load("invalid")
   end
 end

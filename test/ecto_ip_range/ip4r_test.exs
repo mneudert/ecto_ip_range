@@ -8,13 +8,12 @@ defmodule EctoIPRange.IP4RTest do
     casted = %IP4R{range: address, first_ip: {127, 0, 0, 1}, last_ip: {127, 0, 0, 1}}
 
     assert {:ok, ^casted} = IP4R.cast(address)
-
-    assert IP4R.cast("a.b.c.d/32") == :error
+    assert :error = IP4R.cast("a.b.c.d/32")
   end
 
   test "error on invalid cidr maskbits" do
-    assert IP4R.cast("1.2.3.4/64") == :error
-    assert IP4R.cast("1.2.3.4/x") == :error
+    assert :error = IP4R.cast("1.2.3.4/64")
+    assert :error = IP4R.cast("1.2.3.4/x")
   end
 
   test "cast ip4_address" do
@@ -24,8 +23,8 @@ defmodule EctoIPRange.IP4RTest do
     assert {:ok, ^casted} = IP4R.cast(ip4_address)
     assert {:ok, ^casted} = IP4R.cast("127.0.0.1")
 
-    assert IP4R.cast({"a", "b", "c", "d"}) == :error
-    assert IP4R.cast("a.b.c.d") == :error
+    assert :error = IP4R.cast({"a", "b", "c", "d"})
+    assert :error = IP4R.cast("a.b.c.d")
   end
 
   test "cast range" do
@@ -33,22 +32,21 @@ defmodule EctoIPRange.IP4RTest do
     casted = %IP4R{range: range, first_ip: {1, 1, 1, 1}, last_ip: {2, 2, 2, 2}}
 
     assert {:ok, ^casted} = IP4R.cast(range)
-
-    assert IP4R.cast("1.1.1.1-a.b.c.d") == :error
+    assert :error = IP4R.cast("1.1.1.1-a.b.c.d")
   end
 
   test "cast struct" do
     assert {:ok, %IP4R{}} = IP4R.cast(%IP4R{})
-    assert IP4R.cast("invalid") == :error
+    assert :error = IP4R.cast("invalid")
   end
 
   test "dump" do
     assert {:ok, %IP4R{}} = IP4R.dump(%IP4R{})
-    assert IP4R.dump("invalid") == :error
+    assert :error = IP4R.dump("invalid")
   end
 
   test "load" do
     assert {:ok, %IP4R{}} = IP4R.load(%IP4R{})
-    assert IP4R.load("invalid") == :error
+    assert :error = IP4R.load("invalid")
   end
 end
