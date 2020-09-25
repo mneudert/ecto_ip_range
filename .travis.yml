@@ -1,6 +1,11 @@
 language: elixir
 sudo: true
 
+cache:
+  directories:
+    - _build
+    - deps
+
 jobs:
   include:
     - &test
