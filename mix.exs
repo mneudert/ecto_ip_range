@@ -18,8 +18,7 @@ defmodule EctoIPRange.MixProject do
       package: package(),
       preferred_cli_env: [
         coveralls: :test,
-        "coveralls.detail": :test,
-        "coveralls.travis": :test
+        "coveralls.detail": :test
       ],
       test_coverage: [tool: ExCoveralls]
     ]
