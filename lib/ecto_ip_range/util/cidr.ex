@@ -95,6 +95,15 @@ defmodule EctoIPRange.Util.CIDR do
 
   def parse_ipv6(_, _), do: :error
 
+  def parse_mask(address) do
+    with [_address, maskstring] <- String.split(address, "/", parts: 2),
+         {maskbits, ""} when maskbits in 0..32 <- Integer.parse(maskstring) do
+      {:ok, maskbits}
+    else
+      _ -> :error
+    end
+  end
+
   defp ipv4_start_address({start_a, start_b, start_c, start_d}, maskbits) do
     {mask_a, mask_b, mask_c, mask_d} =
       cond do
