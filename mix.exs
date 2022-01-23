@@ -60,6 +60,7 @@ defmodule EctoIPRange.MixProject do
 
   defp docs do
     [
+      formatters: ["html"],
       groups_for_modules: [
         "Ecto Types": [
           EctoIPRange.IP4,
