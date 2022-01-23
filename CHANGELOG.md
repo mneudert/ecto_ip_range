@@ -2,6 +2,9 @@
 
 ## v0.2.0-dev
 
+- Enhancements
+    - Support for "iprange" fields added ([#1](https://github.com/mneudert/ecto_ip_range/pull/1))
+
 - Backwards incompatible changes
     - Minimum required Elixir version is now `~> 1.9`
 
