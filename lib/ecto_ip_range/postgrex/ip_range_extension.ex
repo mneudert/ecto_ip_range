@@ -91,7 +91,7 @@ defmodule EctoIPRange.Postgrex.IPRangeExtension do
     {cidr_first, cidr_last} = CIDR.parse_ipv6(first_address_string, bits)
 
     %IPRange{
-      range: first_address_string <> "/" <> Integer.to_string(bits),
+      range: String.downcase(first_address_string) <> "/" <> Integer.to_string(bits),
       first_ip: cidr_first,
       last_ip: cidr_last
     }
@@ -109,7 +109,7 @@ defmodule EctoIPRange.Postgrex.IPRangeExtension do
     {cidr_first, cidr_last} = CIDR.parse_ipv6(first_address_string, bits)
 
     %IPRange{
-      range: String.upcase(first_address_string) <> "/" <> Integer.to_string(bits),
+      range: String.downcase(first_address_string) <> "/" <> Integer.to_string(bits),
       first_ip: cidr_first,
       last_ip: cidr_last
     }
@@ -132,7 +132,7 @@ defmodule EctoIPRange.Postgrex.IPRangeExtension do
     last_address_string = Inet.ntoa(last_address)
 
     %IPRange{
-      range: String.upcase(first_address_string) <> "-" <> String.upcase(last_address_string),
+      range: String.downcase(first_address_string) <> "-" <> String.downcase(last_address_string),
       first_ip: first_address,
       last_ip: last_address
     }

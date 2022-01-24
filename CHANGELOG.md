@@ -3,6 +3,8 @@
 ## v0.2.0-dev
 
 - Enhancements
+    - IPv6 text representations are converted to lowercase hex digits to better
+      match output from the `:inet` module and closer follow RFC 5952
     - Support for "iprange" fields added ([#1](https://github.com/mneudert/ecto_ip_range/pull/1))
 
 - Backwards incompatible changes

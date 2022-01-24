@@ -46,7 +46,7 @@ defmodule EctoIPRange.IPRangeTest do
     ip6_address = {7871, 56_130, 38_644, 19_455, 38_291, 16_847, 30_069, 45_108}
 
     casted = %IPRange{
-      range: "1EBF:DB42:96F4:4BFF:9593:41CF:7575:B034/128",
+      range: "1ebf:db42:96f4:4bff:9593:41cf:7575:b034/128",
       first_ip: ip6_address,
       last_ip: ip6_address
     }

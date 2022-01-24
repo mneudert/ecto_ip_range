@@ -17,13 +17,16 @@ defmodule EctoIPRange.IP6RTest do
   end
 
   test "cast cidr ipv6/128" do
-    address = "1:2:3:4:5:6:7:8/128"
+    address = {7871, 56_130, 38_644, 19_455, 38_291, 16_847, 30_069, 45_108}
 
     casted = %IP6R{
-      range: address,
-      first_ip: {1, 2, 3, 4, 5, 6, 7, 8},
-      last_ip: {1, 2, 3, 4, 5, 6, 7, 8}
+      range: "1ebf:db42:96f4:4bff:9593:41cf:7575:b034/128",
+      first_ip: address,
+      last_ip: address
     }
+
+    assert {:ok, ^casted} = IP6R.cast(address)
+    assert {:ok, ^casted} = IP6R.cast("1EBF:DB42:96F4:4BFF:9593:41CF:7575:B034")
 
     assert {:ok, ^casted} = IP6R.cast(address)
     assert :error = IP6R.cast("s:t:u:v:w:x:y:z/128")

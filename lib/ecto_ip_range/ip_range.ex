@@ -60,7 +60,7 @@ defmodule EctoIPRange.IPRange do
       address when is_binary(address) ->
         {:ok,
          %__MODULE__{
-           range: String.upcase(address) <> "/128",
+           range: String.downcase(address) <> "/128",
            first_ip: ip6_address,
            last_ip: ip6_address
          }}
@@ -102,7 +102,7 @@ defmodule EctoIPRange.IPRange do
       {:ok, {_, _, _, _, _, _, _, _} = ip6_address} ->
         {:ok,
          %__MODULE__{
-           range: String.upcase(address) <> "/128",
+           range: String.downcase(address) <> "/128",
            first_ip: ip6_address,
            last_ip: ip6_address
          }}
