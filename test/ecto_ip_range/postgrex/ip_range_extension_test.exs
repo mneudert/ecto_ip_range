@@ -55,20 +55,10 @@ defmodule EctoIPRange.Postgrex.IPRangeExtensionTest do
     assert [^value] = TestRepo.all(TestSchemaIPRange)
   end
 
-  test "single /8 insert/select" do
+  test "cidr /24 insert/select" do
     value =
       %TestSchemaIPRange{}
       |> Ecto.Changeset.cast(%{network: "1::/24"}, [:network])
-      |> Ecto.Changeset.validate_required([:network])
-      |> TestRepo.insert!()
-
-    assert [^value] = TestRepo.all(TestSchemaIPRange)
-  end
-
-  test "cidr /128 insert/select" do
-    value =
-      %TestSchemaIPRange{}
-      |> Ecto.Changeset.cast(%{network: "1:2:3:4:5:6:7:8/128"}, [:network])
       |> Ecto.Changeset.validate_required([:network])
       |> TestRepo.insert!()
 
@@ -79,6 +69,16 @@ defmodule EctoIPRange.Postgrex.IPRangeExtensionTest do
     value =
       %TestSchemaIPRange{}
       |> Ecto.Changeset.cast(%{network: "1:2:3:4::/72"}, [:network])
+      |> Ecto.Changeset.validate_required([:network])
+      |> TestRepo.insert!()
+
+    assert [^value] = TestRepo.all(TestSchemaIPRange)
+  end
+
+  test "cidr /128 insert/select" do
+    value =
+      %TestSchemaIPRange{}
+      |> Ecto.Changeset.cast(%{network: "1:2:3:4:5:6:7:8/128"}, [:network])
       |> Ecto.Changeset.validate_required([:network])
       |> TestRepo.insert!()
 
