@@ -66,13 +66,15 @@ defmodule EctoIPRange.MixProject do
           EctoIPRange.IP4,
           EctoIPRange.IP4R,
           EctoIPRange.IP6,
-          EctoIPRange.IP6R
+          EctoIPRange.IP6R,
+          EctoIPRange.IPRange
         ],
         "Postgrex Extensions": [
           EctoIPRange.Postgrex.IP4Extension,
           EctoIPRange.Postgrex.IP4RExtension,
           EctoIPRange.Postgrex.IP6Extension,
-          EctoIPRange.Postgrex.IP6RExtension
+          EctoIPRange.Postgrex.IP6RExtension,
+          EctoIPRange.Postgrex.IPRangeExtension
         ]
       ],
       main: "EctoIPRange",
