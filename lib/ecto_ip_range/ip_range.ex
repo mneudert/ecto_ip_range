@@ -7,6 +7,7 @@ defmodule EctoIPRange.IPRange do
   When used during a changeset cast the following values are accepted:
 
   - `:inet.ip4_address()`: an IP4 tuple, e.g. `{127, 0, 0, 1}` (single address only)
+  - `:inet.ip6_address()`: an IP6 tuple, e.g. `{8193, 3512, 34211, 0, 0, 35374, 880, 29492}` (single address only)
   - `binary`
     - `"127.0.0.1"`: single address
     - `"127.0.0.0/24"`: CIDR notation for a range from `127.0.0.0` to `127.0.0.255`
