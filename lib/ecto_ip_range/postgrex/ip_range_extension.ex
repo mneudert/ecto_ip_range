@@ -1,6 +1,6 @@
 defmodule EctoIPRange.Postgrex.IPRangeExtension do
   @moduledoc """
-  Postgrex extension for "iprange" fields.
+  `Postgrex` extension for `"iprange"` fields.
   """
 
   use Postgrex.BinaryExtension, type: "iprange"

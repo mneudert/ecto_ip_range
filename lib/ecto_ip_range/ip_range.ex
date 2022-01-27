@@ -1,6 +1,6 @@
 defmodule EctoIPRange.IPRange do
   @moduledoc """
-  Struct for PostgreSQL `:iprange`.
+  Struct for PostgreSQL `:iprange` fields.
 
   ## Usage
 

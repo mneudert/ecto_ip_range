@@ -1,6 +1,6 @@
 defmodule EctoIPRange.Postgrex.IP4Extension do
   @moduledoc """
-  Postgrex extension for "ip4" fields.
+  `Postgrex` extension for `"ip4"` fields.
   """
 
   use Postgrex.BinaryExtension, type: "ip4"

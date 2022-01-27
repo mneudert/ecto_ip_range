@@ -1,18 +1,18 @@
 defmodule EctoIPRange do
   @moduledoc """
-  Ecto/Postgrex types to work with the PostgreSQL
-  [`IP4R`](https://github.com/RhodiumToad/ip4r) extension.
+  Ecto/Postgrex types to work with the
+  [PostgreSQL IP4R](https://github.com/RhodiumToad/ip4r) extension.
 
   ## Setup
 
-  Define a module with the required `:postgrex` extensions added:
+  Define a module with the required `Postgrex` extensions added:
 
       Postgrex.Types.define(
         MyApp.PostgrexTypes,
         EctoIPRange.Postgrex.extensions() ++ Ecto.Adapters.Postgres.extensions()
       )
 
-  Add this module to your `:ecto` repo configuration:
+  Add this module to your `Ecto` repo configuration:
 
       config :my_app, MyRepo,
         types: MyApp.PostgrexTypes
@@ -37,6 +37,7 @@ defmodule EctoIPRange do
   - Address Ranges
     - `EctoIPRange.IP4R`
     - `EctoIPRange.IP6R`
+    - `EctoIPRange.IPRange`
 
   ### Migrations
 
