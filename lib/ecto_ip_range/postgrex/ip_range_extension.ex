@@ -54,6 +54,7 @@ defmodule EctoIPRange.Postgrex.IPRangeExtension do
     end
   end
 
+  @doc false
   def decode_range(<<2, bits, _flag, 4, first_a, first_b, first_c, first_d>>) do
     first_ip4_address = {first_a, first_b, first_c, first_d}
     first_address_string = Inet.ntoa(first_ip4_address)
