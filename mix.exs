@@ -60,6 +60,11 @@ defmodule EctoIPRange.MixProject do
 
   defp docs do
     [
+      extras: [
+        "CHANGELOG.md",
+        LICENSE: [title: "License"],
+        "README.md": [title: "Overview"]
+      ],
       formatters: ["html"],
       groups_for_modules: [
         "Ecto Types": [
