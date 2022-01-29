@@ -2,7 +2,7 @@ defmodule EctoIPRange.MixProject do
   use Mix.Project
 
   @url_github "https://github.com/mneudert/ecto_ip_range"
-  @version "0.2.0"
+  @version "0.3.0-dev"
 
   def project do
     [
