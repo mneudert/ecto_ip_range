@@ -11,7 +11,7 @@ Add the library as a dependency to your `mix.exs` file:
 defp deps do
   [
     # ...
-    {:ecto_ip_range, "~> 0.1.0"},
+    {:ecto_ip_range, "~> 0.2.0"},
     # ...
   ]
 end

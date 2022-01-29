@@ -2,12 +2,13 @@ defmodule EctoIPRange.MixProject do
   use Mix.Project
 
   @url_github "https://github.com/mneudert/ecto_ip_range"
+  @version "0.2.0"
 
   def project do
     [
       app: :ecto_ip_range,
       name: "Ecto IP Range",
-      version: "0.2.0-dev",
+      version: @version,
       elixir: "~> 1.9",
       elixirc_paths: elixirc_paths(Mix.env()),
       aliases: aliases(),
@@ -83,7 +84,7 @@ defmodule EctoIPRange.MixProject do
         ]
       ],
       main: "EctoIPRange",
-      source_ref: "master",
+      source_ref: "v#{@version}",
       source_url: @url_github
     ]
   end

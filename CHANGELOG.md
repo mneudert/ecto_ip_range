@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.2.0-dev
+## v0.2.0 (2021-01-29)
 
 - Enhancements
     - IPv6 text representations are converted to lowercase hex digits to better
