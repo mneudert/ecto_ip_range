@@ -82,7 +82,6 @@ defmodule EctoIPRange.MixProject do
           EctoIPRange.Postgrex.IPRangeExtension
         ]
       ],
-      formatters: ["html"],
       main: "EctoIPRange",
       source_ref: "master",
       source_url: @url_github
