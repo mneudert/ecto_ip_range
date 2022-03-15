@@ -9,7 +9,7 @@ defmodule EctoIPRange.MixProject do
       app: :ecto_ip_range,
       name: "Ecto IP Range",
       version: @version,
-      elixir: "~> 1.9",
+      elixir: "~> 1.11",
       elixirc_paths: elixirc_paths(Mix.env()),
       aliases: aliases(),
       deps: deps(),
