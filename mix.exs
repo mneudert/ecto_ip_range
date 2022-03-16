@@ -1,6 +1,7 @@
 defmodule EctoIPRange.MixProject do
   use Mix.Project
 
+  @url_changelog "https://hexdocs.pm/ecto_ip_range/changelog.html"
   @url_github "https://github.com/mneudert/ecto_ip_range"
   @version "0.3.0-dev"
 
@@ -96,7 +97,10 @@ defmodule EctoIPRange.MixProject do
     [
       files: ["CHANGELOG.md", "LICENSE", "mix.exs", "README.md", "lib"],
       licenses: ["Apache-2.0"],
-      links: %{"GitHub" => @url_github}
+      links: %{
+        "Changelog" => @url_changelog,
+        "GitHub" => @url_github
+      }
     ]
   end
 end
