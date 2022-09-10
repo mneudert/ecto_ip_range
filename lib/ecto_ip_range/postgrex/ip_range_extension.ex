@@ -22,12 +22,12 @@ defmodule EctoIPRange.Postgrex.IPRangeExtension do
       } ->
         case CIDR.parse_mask(range) do
           {:ok, mask} ->
-            <<12::int32, 2, mask, 0, 8, first_a, first_b, first_c, first_d, last_a, last_b,
+            <<12::int32(), 2, mask, 0, 8, first_a, first_b, first_c, first_d, last_a, last_b,
               last_c, last_d>>
 
           _ ->
-            <<12::int32, 2, 255, 0, 8, first_a, first_b, first_c, first_d, last_a, last_b, last_c,
-              last_d>>
+            <<12::int32(), 2, 255, 0, 8, first_a, first_b, first_c, first_d, last_a, last_b,
+              last_c, last_d>>
         end
 
       %IPRange{
@@ -35,7 +35,7 @@ defmodule EctoIPRange.Postgrex.IPRangeExtension do
         first_ip: {first_a, first_b, first_c, first_d, first_e, first_f, first_g, first_h},
         last_ip: {last_a, last_b, last_c, last_d, last_e, last_f, last_g, last_h}
       } ->
-        <<36::int32, 3, 255, 0, 32, first_a::size(16)-integer-unsigned,
+        <<36::int32(), 3, 255, 0, 32, first_a::size(16)-integer-unsigned,
           first_b::size(16)-integer-unsigned, first_c::size(16)-integer-unsigned,
           first_d::size(16)-integer-unsigned, first_e::size(16)-integer-unsigned,
           first_f::size(16)-integer-unsigned, first_g::size(16)-integer-unsigned,
@@ -49,7 +49,7 @@ defmodule EctoIPRange.Postgrex.IPRangeExtension do
 
   def decode(_) do
     quote location: :keep do
-      <<len::int32, data::binary-size(len)>> ->
+      <<len::int32(), data::binary-size(len)>> ->
         unquote(__MODULE__).decode_range(data)
     end
   end

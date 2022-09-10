@@ -16,7 +16,7 @@ defmodule EctoIPRange.Postgrex.IP6RExtension do
         first_ip: {first_a, first_b, first_c, first_d, first_e, first_f, first_g, first_h},
         last_ip: {last_a, last_b, last_c, last_d, last_e, last_f, last_g, last_h}
       } ->
-        <<32::int32, first_a::size(16)-integer-unsigned, first_b::size(16)-integer-unsigned,
+        <<32::int32(), first_a::size(16)-integer-unsigned, first_b::size(16)-integer-unsigned,
           first_c::size(16)-integer-unsigned, first_d::size(16)-integer-unsigned,
           first_e::size(16)-integer-unsigned, first_f::size(16)-integer-unsigned,
           first_g::size(16)-integer-unsigned, first_h::size(16)-integer-unsigned,
@@ -29,7 +29,7 @@ defmodule EctoIPRange.Postgrex.IP6RExtension do
 
   def decode(_) do
     quote location: :keep do
-      <<32::int32, first_a::size(16)-integer-unsigned, first_b::size(16)-integer-unsigned,
+      <<32::int32(), first_a::size(16)-integer-unsigned, first_b::size(16)-integer-unsigned,
         first_c::size(16)-integer-unsigned, first_d::size(16)-integer-unsigned,
         first_e::size(16)-integer-unsigned, first_f::size(16)-integer-unsigned,
         first_g::size(16)-integer-unsigned, first_h::size(16)-integer-unsigned,

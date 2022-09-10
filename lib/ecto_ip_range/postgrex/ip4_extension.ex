@@ -11,13 +11,13 @@ defmodule EctoIPRange.Postgrex.IP4Extension do
 
   def encode(_) do
     quote location: :keep do
-      %IP4{ip: {a, b, c, d}} -> <<4::int32, a, b, c, d>>
+      %IP4{ip: {a, b, c, d}} -> <<4::int32(), a, b, c, d>>
     end
   end
 
   def decode(_) do
     quote location: :keep do
-      <<4::int32, a, b, c, d>> -> %IP4{ip: {a, b, c, d}}
+      <<4::int32(), a, b, c, d>> -> %IP4{ip: {a, b, c, d}}
     end
   end
 end
