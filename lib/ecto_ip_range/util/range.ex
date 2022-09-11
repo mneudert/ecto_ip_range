@@ -1,7 +1,7 @@
 defmodule EctoIPRange.Util.Range do
   @moduledoc false
 
-  use Bitwise, skip_operators: true
+  import Bitwise
 
   alias EctoIPRange.Util.Inet
 
