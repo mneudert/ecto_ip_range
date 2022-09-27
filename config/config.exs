@@ -13,5 +13,5 @@ if Mix.env() == :test do
     pool: Ecto.Adapters.SQL.Sandbox,
     types: EctoIPRange.PostgrexTypes
 
-  config :logger, level: :warn
+  config :logger, level: :warning
 end
