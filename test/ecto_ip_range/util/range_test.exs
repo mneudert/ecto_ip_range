@@ -6,7 +6,7 @@ defmodule EctoIPRange.Util.RangeTest do
   alias EctoIPRange.Util.Range
 
   test "parse_ipv4" do
-    [
+    inputs = [
       {"32", {0, 0, 0, 0}},
       {"28", {0, 0, 0, 15}},
       {"24", {0, 0, 0, 255}},
@@ -17,13 +17,14 @@ defmodule EctoIPRange.Util.RangeTest do
       {"4", {15, 255, 255, 255}},
       {"0", {255, 255, 255, 255}}
     ]
-    |> Enum.each(fn {maskbits, range_end} ->
+
+    for {maskbits, range_end} <- inputs do
       assert "0.0.0.0/" <> ^maskbits = Range.parse_ipv4({0, 0, 0, 0}, range_end)
-    end)
+    end
   end
 
   test "parse_ipv6" do
-    [
+    inputs = [
       {"128", {0, 0, 0, 0, 0, 0, 0, 0}},
       {"120", {0, 0, 0, 0, 0, 0, 0, 255}},
       {"112", {0, 0, 0, 0, 0, 0, 0, 65_535}},
@@ -42,8 +43,9 @@ defmodule EctoIPRange.Util.RangeTest do
       {"8", {255, 65_535, 65_535, 65_535, 65_535, 65_535, 65_535, 65_535}},
       {"0", {65_535, 65_535, 65_535, 65_535, 65_535, 65_535, 65_535, 65_535}}
     ]
-    |> Enum.each(fn {maskbits, range_end} ->
+
+    for {maskbits, range_end} <- inputs do
       assert "::/" <> ^maskbits = Range.parse_ipv6({0, 0, 0, 0, 0, 0, 0, 0}, range_end)
-    end)
+    end
   end
 end
