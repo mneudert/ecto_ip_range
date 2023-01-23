@@ -18,10 +18,10 @@ jobs:
           - elixir: '1.13.4'
             otp: '23.3'
             runs-on: ubuntu-20.04
-          - elixir: '1.14.2'
+          - elixir: '1.14.3'
             otp: '24.3'
             runs-on: ubuntu-22.04
-          - elixir: '1.14.2'
+          - elixir: '1.14.3'
             otp: '25.2'
             runs-on: ubuntu-22.04
 
