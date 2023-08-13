@@ -38,11 +38,12 @@ defmodule EctoIPRange.MixProject do
 
   defp deps do
     [
+      {:castore, "~> 1.0", only: :test, runtime: false},
       {:credo, "~> 1.7", only: :dev, runtime: false},
       {:dialyxir, "~> 1.3", only: :dev, runtime: false},
       {:ecto_sql, "~> 3.0"},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
-      {:excoveralls, "~> 0.16.0", only: :test, runtime: false},
+      {:excoveralls, "~> 0.17.0", only: :test, runtime: false},
       {:postgrex, ">= 0.0.0"}
     ]
   end
