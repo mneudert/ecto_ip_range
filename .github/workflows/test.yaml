@@ -42,10 +42,6 @@ jobs:
         ports:
           - 5432:5432
 
-    env:
-      MIX_ENV: test
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
     steps:
       - uses: actions/checkout@v3
 
@@ -71,4 +67,4 @@ jobs:
           mix deps.get
 
       - name: test
-        run: mix coveralls.github
+        run: mix coveralls
